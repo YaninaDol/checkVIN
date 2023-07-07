@@ -1,4 +1,4 @@
-package com.example.accessingdatarest;
+package com.example.accessingdatarest.Model;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.Entity;

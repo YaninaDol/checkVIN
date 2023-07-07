@@ -1,8 +1,8 @@
-package com.example.accessingdatarest;
+package com.example.accessingdatarest.Controller;
 
+import com.example.accessingdatarest.Repositories.CarRepository;
+import com.example.accessingdatarest.Model.Car;
 import com.google.gson.Gson;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
