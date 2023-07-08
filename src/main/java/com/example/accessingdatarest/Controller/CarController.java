@@ -1,7 +1,11 @@
 package com.example.accessingdatarest.Controller;
 
+import com.example.accessingdatarest.Model.Package;
+import com.example.accessingdatarest.Model.User;
 import com.example.accessingdatarest.Repositories.CarRepository;
 import com.example.accessingdatarest.Model.Car;
+import com.example.accessingdatarest.Repositories.PackageRepository;
+import com.example.accessingdatarest.Repositories.UserRepository;
 import com.google.gson.Gson;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,9 +29,22 @@ import java.util.ArrayList;
 public class CarController {
     @Autowired
 private CarRepository _carRepository;
+    @Autowired
+    private UserRepository _userRepository;
+    @Autowired
+    private PackageRepository _packageRepository;
+
     @GetMapping(path="/api")
-    public @ResponseBody String api(@RequestParam String  VIN) throws IOException, InterruptedException {
-       //  This returns a JSON or XML with the users
+    public @ResponseBody String api(@RequestParam String  VIN,@RequestParam int  user_id) throws IOException, InterruptedException {
+
+        if(_userRepository.existsById(user_id)) {
+              //  User user=_userRepository.findById(user_id).get();
+
+//                if((user.getCount()+1)<=_packageRepository.findById(user.getPackage_id()).get().getMax())
+//                {
+
+                    //api search
+            //  This returns a JSON or XML with the users
 //        HttpRequest request = HttpRequest.newBuilder()
 //                .uri(URI.create("https://vindecoder.p.rapidapi.com/decode_vin?vin="+VIN))
 //                .header("X-RapidAPI-Key", "c437db51f7msha1da5617664decbp1d06d3jsn9110935b1618")
@@ -58,10 +75,24 @@ private CarRepository _carRepository;
 ////        }
 //        Car _car=new Car(array2.getJSONObject(0).getString("vin"),array2.getJSONObject(0).getString("make"),array2.getJSONObject(0).getString("model"),array2.getJSONObject(0).getString("year"),array2.getJSONObject(0).getString("trim_level"),array2.getJSONObject(0).getString("engine"),array2.getJSONObject(0).getString("style"),array2.getJSONObject(0).getString("made_in"),array2.getJSONObject(0).getString("anti_brake_system"),array2.getJSONObject(0).get("tank_size").toString(),array2.getJSONObject(0).getString("overall_height"),array2.getJSONObject(0).getString("overall_length"),array2.getJSONObject(0).getString("overall_width"),array2.getJSONObject(0).getString("standard_seating"),array2.getJSONObject(0).getString("highway_mileage"),array2.getJSONObject(0).getString("city_mileage"));
 //        _carRepository.save(_car);
-      //  return new Gson().toJson(_car);
-        Car _car=_carRepository.findById(1).get();
-        return new Gson().toJson(_car);
+                  //  user.setCount(user.getCount()+1);
+                  //  _userRepository.save(user);
+            //  return new Gson().toJson(_car);
 
+                //
+
+//
+//                }
+//
+//                else return "Update your traffic package!";
+
+
+            Car _car = _carRepository.findById(1).get();
+
+            return new Gson().toJson(_car);
+        }
+
+        else return "User not exist!";
     }
 
     @GetMapping(path="/getImg")

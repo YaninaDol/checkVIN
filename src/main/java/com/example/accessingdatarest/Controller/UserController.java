@@ -20,27 +20,50 @@ public class UserController {
         try {
             User n = new User();
             n.setName(user.getName());
-            n.setEmail(user.getEmail());
+            n.setPhone_number(user.getPhone_number());
             n.setPassword(user.getPassword());
+            n.setPackage_id(1);
+            n.setCount(0);
+            n.setRole_id("User");
             userRepository.save(n);
             return "Saved";
         }
         catch (Exception ex)
         {
-            return "Login already exist!";
+            return "Phone already exist!";
         }
     }
-    @PostMapping(path="/authorize") // Map ONLY POST Requests
-    public @ResponseBody String authorize (@RequestParam String login,@RequestParam String password) {
+    @PostMapping(path="/regAdmin") // Map ONLY POST Requests
+    public @ResponseBody String regAdmin (@RequestBody User user) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         try {
-            int f=0;
+            User n = new User();
+            n.setName(user.getName());
+            n.setPhone_number(user.getPhone_number());
+            n.setPassword(user.getPassword());
+            n.setPackage_id(user.getPackage_id());
+            n.setCount(user.getCount());
+            n.setRole_id("Admin");
+            userRepository.save(n);
+            return "Saved";
+        }
+        catch (Exception ex)
+        {
+            return "Phone already exist!";
+        }
+    }
+    @PostMapping(path="/authorize") // Map ONLY POST Requests
+    public @ResponseBody String authorize (@RequestParam String phone_number,@RequestParam String password) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        try {
+
           Iterable<User> allUsers=  userRepository.findAll();
             for (User element : allUsers)
             {
-                if (element.getName().equals(login) && element.getPassword().equals(password)) {
-                    return "Authorized";
+                if (element.getPhone_number().equals(phone_number) && element.getPassword().equals(password)) {
+                    return element.getRole_id();
                 }
 
             }
@@ -61,24 +84,24 @@ public class UserController {
         return "User deleted !";
     }
     @PostMapping(path="/updateName") // Map ONLY POST Requests
-    public @ResponseBody String updateName (@RequestParam int id,@RequestParam String login) {
+    public @ResponseBody String updateName (@RequestParam int id,@RequestParam String name) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
 
         User item=userRepository.findById(id).get();
-        item.setName(login);
+        item.setName(name);
         userRepository.save(item);
         return "User login updated !";
     }
-    @PostMapping(path="/updateEmail") // Map ONLY POST Requests
-    public @ResponseBody String updateEmail (@RequestParam int id,@RequestParam String email) {
+    @PostMapping(path="/updatePhone") // Map ONLY POST Requests
+    public @ResponseBody String updateEmail (@RequestParam int id,@RequestParam String phone_number) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
 
         User item=userRepository.findById(id).get();
-        item.setEmail(email);
+        item.setPhone_number(phone_number);
         userRepository.save(item);
-        return "User email updated !";
+        return "User phone_number updated !";
     }
 
 
