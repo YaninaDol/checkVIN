@@ -34,6 +34,7 @@ private CarRepository _carRepository;
     @Autowired
     private PackageRepository _packageRepository;
 
+
     @GetMapping(path="/api")
     public @ResponseBody String api(@RequestParam String  VIN,@RequestParam int  user_id) throws IOException, InterruptedException {
 
@@ -96,18 +97,19 @@ private CarRepository _carRepository;
     }
 
     @GetMapping(path="/getImg")
-    public @ResponseBody Iterable<Object> getImg(@RequestParam String  VIN) throws IOException, InterruptedException {
+    public @ResponseBody Iterable<String> getImg(@RequestParam String  VIN) throws IOException, InterruptedException {
 
 
 
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(URI.create("https://ucars.pro/presearch?search="+VIN))
-                .header("Authorization", "Bearer eyJpdiI6IkV2bFFKQlk1c0VtN3RwNHFmU090WWc9PSIsInZhbHVlIjoiLytUMVYzUGZtMVp6TjVyN2FHWHJkMTdzaFM1QjBIdkNQbzdBaDFTVThxYXFuRzVMcnZEWTN4emk0RkI1MjRLbEo1dWYyeTB2WHNsVEs0dXl4SDBSUCtmQkRGQ2s2cjJpMG5JVGE4dU5MTStjQVhEQ29panZqQ2daRmdib3RuZFciLCJtYWMiOiIzNzI1ZjcwYzkzZjUxZTg0ZjIyMDU2ZTcyMjcwNDcwNGNlZWEyZWU0NzZiYzNkMGZjYjM0NjllODUyN2ZmNzExIiwidGFnIjoiIn0%3D")
-                .header("Cookie", "XSRF-TOKEN=eyJpdiI6IjVvTUdVd1ZvbjI3dVMzSHpHVTVwcEE9PSIsInZhbHVlIjoiL25hbzk2dzBzRm82dTV1NDh6VW05cXVGUkNYam5CQkU1RHlTRDNIYmh3eHVyWFZIakhzdlNDTXZ5R2Z6cnJVZEVFbmZ3bnZFeXNNVGVlRTNnYlZ1ai9YYjF2Um5IU2lEVG81UVZHU21iamg0TE5ieEhpQkdCT0ZnNDNvMEljdUIiLCJtYWMiOiIxYmFhM2EyODgwZTc0NmQwMzc2MzE0NmRjNTE1OWU4YzE0MjE2YjNkMGQwZGVmYmQ5MzE0Y2JkNjFjNjQzY2I2IiwidGFnIjoiIn0%3D; __cf_bm=P8ChpK4Zqoz18vy6.Uk368d.4woAaTYIE3EEsLtp2sA-1688665588-0-ATuNDappvNroHPhiiVDnMSFmQ9yXRrWhblECpXIRTE2x2f/gPYs0HxHz195a6Zrntw==; ucars_session=eyJpdiI6ImhrWHFBa1ZCbTgxamI0U1BxTEszWUE9PSIsInZhbHVlIjoiaWJKdGllRklJRFJUVEFUYlNDVkh1TnVCeVpEMU9NcytxeW4vcFlGeStpMG5ZYkl3MHdZZVVGcEhtMXB4cUU2M3lYeVBHSkJNZEtQR3VHV25OOWpEMnVCQ2RJZGNvRml3c3BlemQ3cjNHQ0NDWk5iN3dPZW9zZzZuNG51L0lXaXgiLCJtYWMiOiJiNmZlOWY2MDQ0MDdiYTVjZTBlOTkzZjQzM2RlYTNkYjE0NTg0Y2M2MDUxZGUzODc5NDVjYTg5ZGNhNWMxZjZiIiwidGFnIjoiIn0%3D")
+                .header("Authorization", "Bearer eyJpdiI6IlBJMEpBaUVmS2NpS3c3ZXg1bWpHMHc9PSIsInZhbHVlIjoicUt4TC9wOTZ6enhHUXhQMUlyRmU2UjBoUEhndWkvajk5Z2RIdUp1RnFzdHpYYnpkV0dyN2dJZTVNZWhBWkJUd0UvNVNBeTJ1czd1Qi9GeTdCNlRiYWcrUWpOSFRFR0tBN0c5Q3J3aUZ4amtIc1lyaWZqK3k0ZjdVcENld0M1elgiLCJtYWMiOiI3NzNlNjRiZmViOTg5ZDk2OWRlY2M0ZjA3NjBjNDNhZWM2YzEwMWE3MGEwMjk1NTc1ODdiOGRiYTliMDYwZTc2IiwidGFnIjoiIn0%3D")
+                .header("Cookie", "XSRF-TOKEN=eyJpdiI6IlBJMEpBaUVmS2NpS3c3ZXg1bWpHMHc9PSIsInZhbHVlIjoicUt4TC9wOTZ6enhHUXhQMUlyRmU2UjBoUEhndWkvajk5Z2RIdUp1RnFzdHpYYnpkV0dyN2dJZTVNZWhBWkJUd0UvNVNBeTJ1czd1Qi9GeTdCNlRiYWcrUWpOSFRFR0tBN0c5Q3J3aUZ4amtIc1lyaWZqK3k0ZjdVcENld0M1elgiLCJtYWMiOiI3NzNlNjRiZmViOTg5ZDk2OWRlY2M0ZjA3NjBjNDNhZWM2YzEwMWE3MGEwMjk1NTc1ODdiOGRiYTliMDYwZTc2IiwidGFnIjoiIn0%3D; expires=Wed, 12 Jul 2023 21:24:22 GMT; Max-Age=7200; path=/; samesite=lax")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response2 = HttpClient.newHttpClient().send(request2, HttpResponse.BodyHandlers.ofString());
         String[] arrOfStr = response2.body().split("\"",7);
+        System.out.println(response2.body());
         System.out.println(arrOfStr[5]);
         String charsToRemove = "\\";
         String url=new String();
@@ -119,13 +121,16 @@ private CarRepository _carRepository;
         Document document = Jsoup.connect(url).get();
         // document.select("img").forEach(System.out::println);
         Iterable iter=document.select("img");
-        ArrayList<Object> images = new ArrayList<Object>();
+
+        ArrayList<String> images = new ArrayList<String>();
         for (var item:iter)
         {
-            if(item.toString().contains("data-splide-lazy"))
+            System.out.println(item.toString());
+            if(item.toString().contains("data-splide-lazy")&&item.toString().contains(VIN))
             {
-                // System.out.println(item);
-                images.add(item);
+                String[] arr = item.toString().split("\"",10);
+
+                images.add(arr[1]);
             }
         }
 
@@ -175,7 +180,7 @@ private CarRepository _carRepository;
         String rem=arr[3].replace("\"","");
         String lot=rem.replace(">","");
         //System.out.println("https://www.copart.com/lot/"+lot);
-        return ("https://www.copart.com/lot/"+lot);
+        return (lot);
 
 
     }

@@ -54,7 +54,7 @@ public class UserController {
         }
     }
     @PostMapping(path="/authorize") // Map ONLY POST Requests
-    public @ResponseBody String authorize (@RequestParam String phone_number,@RequestParam String password) {
+    public @ResponseBody String authorize (@RequestBody User user) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         try {
@@ -62,7 +62,7 @@ public class UserController {
           Iterable<User> allUsers=  userRepository.findAll();
             for (User element : allUsers)
             {
-                if (element.getPhone_number().equals(phone_number) && element.getPassword().equals(password)) {
+                if (element.getPhone_number().equals(user.getPhone_number()) && element.getPassword().equals(user.getPassword())) {
                     return element.getRole_id();
                 }
 
