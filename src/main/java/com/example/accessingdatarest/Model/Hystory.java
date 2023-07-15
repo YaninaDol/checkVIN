@@ -26,5 +26,12 @@ public class Hystory {
         this.user_id=user_id;
         this.package_name=package_name;
     }
-
+    @Override
+    public String toString() {
+        return "models.User{" +
+                "date=" + date +
+                ", user_id='" + user_id + '\'' +
+                ", package_name='" + package_name + '\'' +
+                '}';
+    }
 }

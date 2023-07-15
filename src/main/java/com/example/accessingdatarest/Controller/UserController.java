@@ -1,7 +1,9 @@
 package com.example.accessingdatarest.Controller;
 
+import com.example.accessingdatarest.Model.Response;
 import com.example.accessingdatarest.Model.User;
 import com.example.accessingdatarest.Repositories.UserRepository;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -63,7 +65,8 @@ public class UserController {
             for (User element : allUsers)
             {
                 if (element.getPhone_number().equals(user.getPhone_number()) && element.getPassword().equals(user.getPassword())) {
-                    return element.getRole_id();
+                   // return element.getRole_id();
+                   return new Gson().toJson(new Response(element.getId(),element.getRole_id(),element.getPackage_id(),element.getName()));
                 }
 
             }

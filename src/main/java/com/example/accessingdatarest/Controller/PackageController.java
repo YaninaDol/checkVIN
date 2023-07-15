@@ -116,6 +116,7 @@ public class PackageController {
             {
                 User user=userRepository.findById(user_id).get();
                 user.setPackage_id(packageRepository.findById(package_id).get().getId());
+                user.setCount(0);
                 Hystory item=new Hystory(  LocalDateTime.now()
                     .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")),user_id,packageRepository.findById(package_id).get().getName());
                 userRepository.save(user);
@@ -128,6 +129,7 @@ public class PackageController {
             }
 
     }
+
 
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Package> getAllUsers() {
