@@ -86,15 +86,17 @@ public class UserController {
         userRepository.deleteById(id);
         return "User deleted !";
     }
-    @PostMapping(path="/updateName") // Map ONLY POST Requests
-    public @ResponseBody String updateName (@RequestParam int id,@RequestParam String name) {
+    @PostMapping(path="/updateUser") // Map ONLY POST Requests
+    public @ResponseBody String updateUser (@RequestParam int id,@RequestParam String name , @RequestParam String phone_number) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
 
         User item=userRepository.findById(id).get();
         item.setName(name);
+        item.setPhone_number(phone_number);
         userRepository.save(item);
-        return "User login updated !";
+
+        return "User updated !";
     }
     @PostMapping(path="/updatePhone") // Map ONLY POST Requests
     public @ResponseBody String updateEmail (@RequestParam int id,@RequestParam String phone_number) {

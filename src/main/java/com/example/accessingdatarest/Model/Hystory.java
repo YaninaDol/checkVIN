@@ -28,7 +28,7 @@ public class Hystory {
     }
     @Override
     public String toString() {
-        return "models.User{" +
+        return "models.Hystory{" +
                 "date=" + date +
                 ", user_id='" + user_id + '\'' +
                 ", package_name='" + package_name + '\'' +

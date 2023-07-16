@@ -28,7 +28,7 @@ public class PackageController {
     private HystoryRepository hystoryRepository;
 
     @PostMapping(path = "/addPackage") // Map ONLY POST Requests
-    public @ResponseBody String addPackage(@RequestParam String role,@RequestParam String name,int max) {
+    public @ResponseBody String addPackage(@RequestParam String role,@RequestParam String name,int max,int price) {
 
         if(role.equals("Admin"))
         {
@@ -36,6 +36,7 @@ public class PackageController {
                 Package _package = new Package();
                 _package.setName(name);
                 _package.setMax(max);
+                _package.setPrice(price);
                 packageRepository.save(_package);
                 return "Saved";
             }
@@ -66,16 +67,18 @@ public class PackageController {
         }
         return "Error by permit";
     }
-    @PostMapping(path = "/updateMaxPackage") // Map ONLY POST Requests
-    public @ResponseBody String updateMaxPackage(@RequestParam String role,@RequestParam int id,@RequestParam int max) {
+    @PostMapping(path = "/updatePackage") // Map ONLY POST Requests
+    public @ResponseBody String updatePackage(@RequestParam String role,@RequestParam int id,@RequestParam String name,@RequestParam int max,@RequestParam int price) {
 
-        if(role=="Admin")
+        if(role.equals("Admin"))
         {
 
             if(packageRepository.existsById(id))
             {
                 Package _package = packageRepository.findById(id).get();
+                _package.setName(name);
                 _package.setMax(max);
+                _package.setPrice(price);
                 packageRepository.save(_package);
                 return "Saved";
             }
@@ -130,7 +133,15 @@ public class PackageController {
 
     }
 
+    @PostMapping(path="/deletePackage") // Map ONLY POST Requests
+    public @ResponseBody String deletePackage (@RequestParam int id) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
 
+
+        packageRepository.deleteById(id);
+        return "Package deleted !";
+    }
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Package> getAllUsers() {
         // This returns a JSON or XML with the users

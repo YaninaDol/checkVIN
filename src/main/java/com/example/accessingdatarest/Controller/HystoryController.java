@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+
 @Controller // This means that this class is a Controller
 @RequestMapping(path="/hystory") // This means URL's start with /demo (after Application path)
 public class HystoryController {
@@ -19,6 +22,11 @@ public class HystoryController {
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Hystory> all() {
         // This returns a JSON or XML with the users
-        return hystoryRepository.findAll();
+        Iterable<Hystory> all= hystoryRepository.findAll();
+        for (var item:
+             all) {System.out.println(item);
+
+        }
+        return all;
     }
 }

@@ -7,6 +7,8 @@ import com.example.accessingdatarest.Model.Car;
 import com.example.accessingdatarest.Repositories.PackageRepository;
 import com.example.accessingdatarest.Repositories.UserRepository;
 import com.google.gson.Gson;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,58 +41,58 @@ private CarRepository _carRepository;
     public @ResponseBody String api(@RequestParam String  VIN,@RequestParam int  user_id) throws IOException, InterruptedException {
 
         if(_userRepository.existsById(user_id)) {
-              //  User user=_userRepository.findById(user_id).get();
+                User user=_userRepository.findById(user_id).get();
 
-//                if((user.getCount()+1)<=_packageRepository.findById(user.getPackage_id()).get().getMax())
-//                {
+                if((user.getCount()+1)<=_packageRepository.findById(user.getPackage_id()).get().getMax())
+                {
 
-                    //api search
+                 //   api search
             //  This returns a JSON or XML with the users
-//        HttpRequest request = HttpRequest.newBuilder()
-//                .uri(URI.create("https://vindecoder.p.rapidapi.com/decode_vin?vin="+VIN))
-//                .header("X-RapidAPI-Key", "c437db51f7msha1da5617664decbp1d06d3jsn9110935b1618")
-//                .header("X-RapidAPI-Host", "vindecoder.p.rapidapi.com")
-//                .method("GET", HttpRequest.BodyPublishers.noBody())
-//                .build();
-//        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-//
-//        HttpRequest request2 = HttpRequest.newBuilder()
-//                .uri(URI.create("https://vindecoder.p.rapidapi.com/salvage_check?vin="+VIN))
-//                .header("X-RapidAPI-Key", "c437db51f7msha1da5617664decbp1d06d3jsn9110935b1618")
-//                .header("X-RapidAPI-Host", "vindecoder.p.rapidapi.com")
-//                .method("GET", HttpRequest.BodyPublishers.noBody())
-//                .build();
-//        HttpResponse<String> response2 = HttpClient.newHttpClient().send(request2, HttpResponse.BodyHandlers.ofString());
-//      //  System.out.println(response.body());
-//
-//        String answer="["+response.body()+"]";
-//
-//        JSONArray array = new JSONArray(answer);
-//        JSONObject object = array.getJSONObject(0);
-//       // System.out.println(object);
-//        JSONArray array2 =new JSONArray("["+object.get("specification").toString()+"]");
-////        for(int i=0; i < array2.length(); i++) {
-////            JSONObject object2 = array2.getJSONObject(i);
-////            System.out.println(object2.getString("vin"));
-////            System.out.println(object2.getString("year"));
-////        }
-//        Car _car=new Car(array2.getJSONObject(0).getString("vin"),array2.getJSONObject(0).getString("make"),array2.getJSONObject(0).getString("model"),array2.getJSONObject(0).getString("year"),array2.getJSONObject(0).getString("trim_level"),array2.getJSONObject(0).getString("engine"),array2.getJSONObject(0).getString("style"),array2.getJSONObject(0).getString("made_in"),array2.getJSONObject(0).getString("anti_brake_system"),array2.getJSONObject(0).get("tank_size").toString(),array2.getJSONObject(0).getString("overall_height"),array2.getJSONObject(0).getString("overall_length"),array2.getJSONObject(0).getString("overall_width"),array2.getJSONObject(0).getString("standard_seating"),array2.getJSONObject(0).getString("highway_mileage"),array2.getJSONObject(0).getString("city_mileage"));
-//        _carRepository.save(_car);
-                  //  user.setCount(user.getCount()+1);
-                  //  _userRepository.save(user);
-            //  return new Gson().toJson(_car);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vindecoder.p.rapidapi.com/decode_vin?vin="+VIN))
+                .header("X-RapidAPI-Key", "c437db51f7msha1da5617664decbp1d06d3jsn9110935b1618")
+                .header("X-RapidAPI-Host", "vindecoder.p.rapidapi.com")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
-                //
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(URI.create("https://vindecoder.p.rapidapi.com/salvage_check?vin="+VIN))
+                .header("X-RapidAPI-Key", "c437db51f7msha1da5617664decbp1d06d3jsn9110935b1618")
+                .header("X-RapidAPI-Host", "vindecoder.p.rapidapi.com")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response2 = HttpClient.newHttpClient().send(request2, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
 
-//
-//                }
-//
-//                else return "Update your traffic package!";
+        String answer="["+response.body()+"]";
+
+        JSONArray array = new JSONArray(answer);
+        JSONObject object = array.getJSONObject(0);
+        System.out.println(object);
+        JSONArray array2 =new JSONArray("["+object.get("specification").toString()+"]");
+//        for(int i=0; i < array2.length(); i++) {
+//            JSONObject object2 = array2.getJSONObject(i);
+//            System.out.println(object2.getString("vin"));
+//            System.out.println(object2.getString("year"));
+//        }
+        Car _car=new Car(array2.getJSONObject(0).getString("vin"),array2.getJSONObject(0).getString("make"),array2.getJSONObject(0).getString("model"),array2.getJSONObject(0).getString("year"),array2.getJSONObject(0).getString("trim_level"),array2.getJSONObject(0).getString("engine"),array2.getJSONObject(0).getString("style"),array2.getJSONObject(0).getString("made_in"),array2.getJSONObject(0).getString("anti_brake_system"),array2.getJSONObject(0).get("tank_size").toString(),array2.getJSONObject(0).getString("overall_height"),array2.getJSONObject(0).getString("overall_length"),array2.getJSONObject(0).getString("overall_width"),array2.getJSONObject(0).getString("standard_seating"),array2.getJSONObject(0).getString("highway_mileage"),array2.getJSONObject(0).getString("city_mileage"));
+        _carRepository.save(_car);
+                    user.setCount(user.getCount()+1);
+                    _userRepository.save(user);
+              return new Gson().toJson(_car);
 
 
-            Car _car = _carRepository.findById(1).get();
 
-            return new Gson().toJson(_car);
+
+                }
+
+                else return "Update your traffic package!";
+
+
+          //  Car _car = _carRepository.findById(1).get();
+
+          //  return new Gson().toJson(_car);
         }
 
         else return "User not exist!";
